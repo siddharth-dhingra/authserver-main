@@ -56,18 +56,15 @@ public class ElasticsearchService {
 
         SearchResponse<Finding> response = esClient.search(request, Finding.class);
 
-        // Extract total hits
         long totalHits = 0L;
         if (response.hits().total() != null) {
             totalHits = response.hits().total().value();
         }
 
-        // Extract actual findings
         List<Finding> findings = response.hits().hits().stream()
                 .map(hit -> hit.source())
                 .toList();
 
-        // Return a DTO with both findings & totalHits
         return new PageDTO<>(findings, totalHits);
     }
 

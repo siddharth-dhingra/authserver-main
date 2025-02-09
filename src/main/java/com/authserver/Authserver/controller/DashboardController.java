@@ -20,10 +20,6 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
-    /**
-     * GET /dashboard/alerts/toolCounts
-     * Returns a map of {toolType -> count}, e.g. {"CODESCAN": 10, "DEPENDABOT": 5, "SECRETSCAN": 7}
-     */
     @GetMapping("/alerts/toolCounts")
     public ResponseEntity<Map<String, Long>> getAlertsPerTool() {
         Map<String, Long> data = dashboardService.getAlertsPerTool();

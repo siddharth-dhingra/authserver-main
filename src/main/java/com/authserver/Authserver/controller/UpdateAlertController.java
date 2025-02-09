@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequireRoles({RoleEnum.SUPER_ADMIN})
 @RequestMapping("/alerts")
 public class UpdateAlertController {
 
@@ -17,13 +18,11 @@ public class UpdateAlertController {
         this.updateEventProducer = updateEventProducer;
     }
 
-    @RequireRoles({RoleEnum.SUPER_ADMIN})
+    
     @PostMapping("/update")
     public ResponseEntity<String> updateAlert(@RequestBody UpdateEvent request) {
-        // 1. Produce the UpdateEvent
         updateEventProducer.sendUpdateEvent(request);
 
-        // 2. Return success immediately
         return ResponseEntity.ok("Update request published to Kafka successfully.");
     }
 }

@@ -7,5 +7,4 @@ import com.authserver.Authserver.model.OAuthUser;
 
 @Repository
 public interface OAuthUserRepository extends JpaRepository<OAuthUser, String> {
-    // find by googleId or email if needed
 }

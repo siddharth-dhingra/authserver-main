@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequireRoles({RoleEnum.ADMIN,RoleEnum.SUPER_ADMIN})
 @RequestMapping("/alert")
 public class ScanController {
 
@@ -21,7 +22,6 @@ public class ScanController {
         this.scanEventProducer = scanEventProducer;
     }
 
-    @RequireRoles({RoleEnum.ADMIN,RoleEnum.SUPER_ADMIN})
     @PostMapping("/scan")
     public ResponseEntity<String> initiateScan(@RequestBody ScanEvent request) {
         scanEventProducer.sendScanEvent(request);

@@ -9,6 +9,5 @@ import com.authserver.Authserver.model.UserRole;
 
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
-    // find by googleId, etc.
     Optional<UserRole> findByGoogleId(String googleId);
 }
