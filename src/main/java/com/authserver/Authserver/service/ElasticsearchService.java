@@ -6,9 +6,9 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.authserver.Authserver.model.Finding;
-import com.authserver.Authserver.model.ScanType;
-import com.authserver.Authserver.model.Severity;
-import com.authserver.Authserver.model.Status;
+import com.authserver.Authserver.model.FilterReferences.ScanType;
+import com.authserver.Authserver.model.FilterReferences.Severity;
+import com.authserver.Authserver.model.FilterReferences.Status;
 import com.authserver.Authserver.dto.PageDTO;
 
 import org.springframework.beans.factory.annotation.Value;

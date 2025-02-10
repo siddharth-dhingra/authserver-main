@@ -1,5 +1,7 @@
 package com.authserver.Authserver.model;
 
+import com.authserver.Authserver.model.FilterReferences.ScanType;
+
 public class UpdateEvent {
 
     private String owner;       

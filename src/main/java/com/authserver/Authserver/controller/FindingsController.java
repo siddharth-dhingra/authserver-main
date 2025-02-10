@@ -1,10 +1,10 @@
 package com.authserver.Authserver.controller;
 
 import com.authserver.Authserver.model.Finding;
-import com.authserver.Authserver.model.RoleEnum;
-import com.authserver.Authserver.model.ScanType;
-import com.authserver.Authserver.model.Severity;
-import com.authserver.Authserver.model.Status;
+import com.authserver.Authserver.model.FilterReferences.RoleEnum;
+import com.authserver.Authserver.model.FilterReferences.ScanType;
+import com.authserver.Authserver.model.FilterReferences.Severity;
+import com.authserver.Authserver.model.FilterReferences.Status;
 import com.authserver.Authserver.service.ElasticsearchService;
 import com.authserver.Authserver.CustomAnnotations.RequireRoles;
 import com.authserver.Authserver.dto.PageDTO;

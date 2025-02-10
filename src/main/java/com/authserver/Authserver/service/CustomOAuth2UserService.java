@@ -2,7 +2,7 @@ package com.authserver.Authserver.service;
 
 import com.authserver.Authserver.model.OAuthUser;
 import com.authserver.Authserver.model.UserRole;
-import com.authserver.Authserver.model.RoleEnum;
+import com.authserver.Authserver.model.FilterReferences.RoleEnum;
 import com.authserver.Authserver.repository.OAuthUserRepository;
 import com.authserver.Authserver.repository.UserRoleRepository;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

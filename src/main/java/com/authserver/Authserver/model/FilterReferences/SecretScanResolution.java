@@ -1,4 +1,4 @@
-package com.authserver.Authserver.model;
+package com.authserver.Authserver.model.FilterReferences;
 
 public enum SecretScanResolution {
     FALSE_POSITIVE("false_positive"),

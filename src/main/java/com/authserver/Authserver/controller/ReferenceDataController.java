@@ -1,7 +1,14 @@
 package com.authserver.Authserver.controller;
 
 import com.authserver.Authserver.CustomAnnotations.RequireRoles;
-import com.authserver.Authserver.model.*;
+import com.authserver.Authserver.model.FilterReferences.CodeScanDismissedReason;
+import com.authserver.Authserver.model.FilterReferences.CodeScanState;
+import com.authserver.Authserver.model.FilterReferences.DependabotDismissedReason;
+import com.authserver.Authserver.model.FilterReferences.DependabotState;
+import com.authserver.Authserver.model.FilterReferences.RoleEnum;
+import com.authserver.Authserver.model.FilterReferences.SecretScanResolution;
+import com.authserver.Authserver.model.FilterReferences.SecretScanState;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

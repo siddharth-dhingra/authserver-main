@@ -3,6 +3,8 @@ package com.authserver.Authserver.model;
 
 import java.util.List;
 
+import com.authserver.Authserver.model.FilterReferences.ScanType;
+
 public class ScanEvent {
     private String repo;
     private String owner;

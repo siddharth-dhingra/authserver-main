@@ -1,7 +1,7 @@
 package com.authserver.Authserver.CustomAnnotations;
 
-import com.authserver.Authserver.model.RoleEnum;
 import com.authserver.Authserver.model.UserRole;
+import com.authserver.Authserver.model.FilterReferences.RoleEnum;
 import com.authserver.Authserver.repository.UserRoleRepository;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -43,7 +43,7 @@ public class RoleCheckAspect {
 
             UserRole userRole = roleOpt.get();
             RoleEnum userDbRole = userRole.getRole();
-
+            System.out.println(userRole);
             for (RoleEnum re : allowed) {
                 if (userDbRole == re) {
                     return joinPoint.proceed();

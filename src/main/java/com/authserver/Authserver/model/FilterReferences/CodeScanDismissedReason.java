@@ -1,4 +1,4 @@
-package com.authserver.Authserver.model;
+package com.authserver.Authserver.model.FilterReferences;
 
 public enum CodeScanDismissedReason {
     FALSE_POSITIVE("false positive"),

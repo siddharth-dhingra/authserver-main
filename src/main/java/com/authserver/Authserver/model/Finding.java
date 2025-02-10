@@ -1,6 +1,10 @@
 package com.authserver.Authserver.model;
 import java.util.Map;
 
+import com.authserver.Authserver.model.FilterReferences.ScanType;
+import com.authserver.Authserver.model.FilterReferences.Severity;
+import com.authserver.Authserver.model.FilterReferences.Status;
+
 public class Finding {
 
     private String id;             
