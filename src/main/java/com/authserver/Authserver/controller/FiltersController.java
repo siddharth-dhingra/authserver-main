@@ -1,7 +1,5 @@
 package com.authserver.Authserver.controller;
 
-import com.authserver.Authserver.CustomAnnotations.RequireRoles;
-import com.authserver.Authserver.model.FilterReferences.RoleEnum;
 import com.authserver.Authserver.model.FilterReferences.ScanType;
 import com.authserver.Authserver.model.FilterReferences.Severity;
 import com.authserver.Authserver.model.FilterReferences.Status;
