@@ -4,8 +4,7 @@ import com.authserver.Authserver.model.FilterReferences.ScanType;
 
 public class UpdateEvent {
 
-    private String owner;       
-    private String repo;        
+    private String tenantId;      
     private ScanType toolType;    
     private long alertNumber;   
     private String newState;    
@@ -13,10 +12,9 @@ public class UpdateEvent {
 
     public UpdateEvent() {}
 
-    public UpdateEvent(String owner, String repo, ScanType toolType,
+    public UpdateEvent(String tenantId, ScanType toolType,
                        long alertNumber, String newState, String reason) {
-        this.owner = owner;
-        this.repo = repo;
+        this.tenantId = tenantId;
         this.toolType = toolType;
         this.alertNumber = alertNumber;
         this.newState = newState;
@@ -24,22 +22,6 @@ public class UpdateEvent {
     }
 
     // Getters and setters
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public String getRepo() {
-        return repo;
-    }
-
-    public void setRepo(String repo) {
-        this.repo = repo;
-    }
 
     public ScanType getToolType() {
         return toolType;
@@ -71,5 +53,13 @@ public class UpdateEvent {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 }

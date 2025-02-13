@@ -28,6 +28,7 @@ public class FindingsController {
 
     @GetMapping("/search")
     public ResponseEntity<PageDTO<Finding>> searchFindings(
+            @RequestParam String tenantId,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(required = false) List<Status> statuses,
@@ -35,7 +36,7 @@ public class FindingsController {
             @RequestParam(required = false) List<ScanType> toolTypes) {
 
         try {
-            PageDTO<Finding> results = elasticsearchService.findFiltered(toolTypes, statuses, severities, page, size);
+            PageDTO<Finding> results = elasticsearchService.findFiltered(tenantId, toolTypes, statuses, severities, page, size);
             return ResponseEntity.ok(results);
         } catch (IOException e) {
             e.printStackTrace();

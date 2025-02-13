@@ -20,9 +20,10 @@ public class UpdateAlertController {
 
     
     @PostMapping("/update")
-    public ResponseEntity<String> updateAlert(@RequestBody UpdateEvent request) {
-        updateEventProducer.sendUpdateEvent(request);
+    public ResponseEntity<String> updateAlert(@RequestBody UpdateEvent request, @RequestParam String tenantId) {
 
+        request.setTenantId(tenantId);
+        updateEventProducer.sendUpdateEvent(request);
         return ResponseEntity.ok("Update request published to Kafka successfully.");
     }
 }

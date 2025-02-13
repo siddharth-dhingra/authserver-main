@@ -5,7 +5,8 @@ import co.elastic.clients.elasticsearch._types.aggregations.*;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.authserver.Authserver.model.Finding;
-import org.springframework.beans.factory.annotation.Value;
+import com.authserver.Authserver.model.Tenant;
+import com.authserver.Authserver.repository.TenantRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,17 +15,24 @@ import java.util.*;
 @Service
 public class DashboardService {
 
-    @Value("${app.elasticsearch.findings-index}")
-    private String findingsIndex;
-
     private final ElasticsearchClient esClient;
+    private final TenantRepository tenantRepository;
 
-    public DashboardService(ElasticsearchClient esClient) {
+
+    public DashboardService(ElasticsearchClient esClient, TenantRepository tenantRepository) {
         this.esClient = esClient;
+        this.tenantRepository = tenantRepository;
     }
 
-    public Map<String, Long> getAlertsPerTool() {
+    private String getFindingsIndex(String tenantId) {
+        Tenant tenant = tenantRepository.findByTenantId(tenantId)
+                .orElseThrow(() -> new RuntimeException("Invalid tenantId: " + tenantId));
+        return tenant.getEsIndex();
+    }
+
+    public Map<String, Long> getAlertsPerTool(String tenantId) {
         // group by toolType.keyword
+        String findingsIndex = getFindingsIndex(tenantId);
         try {
             SearchRequest req = SearchRequest.of(s -> s
                 .index(findingsIndex)
@@ -49,8 +57,9 @@ public class DashboardService {
         }
     }
 
-    public Map<String, Long> getAlertsPerState(String tool) {
+    public Map<String, Long> getAlertsPerState(String tenantId, String tool) {
         // group by status.keyword
+        String findingsIndex = getFindingsIndex(tenantId);
         try {
             SearchRequest req = SearchRequest.of(s -> s
                 .index(findingsIndex)
@@ -82,8 +91,9 @@ public class DashboardService {
         }
     }
 
-    public Map<String, Long> getAlertsPerSeverity(String tool) {
+    public Map<String, Long> getAlertsPerSeverity(String tenantId, String tool) {
         // group by severity.keyword
+        String findingsIndex = getFindingsIndex(tenantId);
         try {
             SearchRequest req = SearchRequest.of(s -> s
                 .index(findingsIndex)
@@ -115,7 +125,8 @@ public class DashboardService {
         }
     }
 
-    public List<Map<String, Object>> getCvssHistogram(String tool) {
+    public List<Map<String, Object>> getCvssHistogram(String tenantId, String tool) {
+        String findingsIndex = getFindingsIndex(tenantId);
         try {
             SearchRequest req = SearchRequest.of(s -> s
                 .index(findingsIndex)

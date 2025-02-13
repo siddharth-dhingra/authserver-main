@@ -6,31 +6,22 @@ import java.util.List;
 import com.authserver.Authserver.model.FilterReferences.ScanType;
 
 public class ScanEvent {
-    private String repo;
-    private String owner;
+    private String tenantId;
     private List<ScanType> types;
 
     public ScanEvent() {
     }
 
-    public ScanEvent(String repo, String owner, List<ScanType> types) {
-        this.repo = repo;
-        this.owner = owner;
+    public ScanEvent(String tenantId, List<ScanType> types) {
+        this.tenantId = tenantId;
         this.types = types;
     }
 
-    public String getRepo() {
-        return repo;
+    public String getTenantId() {
+        return tenantId;
     }
-    public void setRepo(String repo) {
-        this.repo = repo;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 
     public List<ScanType> getTypes() {
@@ -43,8 +34,7 @@ public class ScanEvent {
     @Override
     public String toString() {
         return "ScanEvent{" +
-                "repo='" + repo + '\'' +
-                ", owner='" + owner + '\'' +
+                "tenantId='" + tenantId + '\'' +
                 ", types=" + types +
                 '}';
     }

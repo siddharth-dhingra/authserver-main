@@ -1,6 +1,7 @@
 package com.authserver.Authserver.config;
 
 import com.authserver.Authserver.repository.OAuthUserRepository;
+import com.authserver.Authserver.repository.TenantRepository;
 import com.authserver.Authserver.repository.UserRoleRepository;
 import com.authserver.Authserver.service.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
@@ -58,7 +59,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService(OAuthUserRepository userRepo, UserRoleRepository roleRepo) {
-        return new CustomOAuth2UserService(userRepo, roleRepo);
+    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService(OAuthUserRepository userRepo, UserRoleRepository roleRepo, TenantRepository tenantRepository) {
+        return new CustomOAuth2UserService(userRepo, roleRepo, tenantRepository);
     }
 }

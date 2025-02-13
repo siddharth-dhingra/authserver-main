@@ -1,9 +1,11 @@
 package com.authserver.Authserver.service;
 
 import com.authserver.Authserver.model.OAuthUser;
+import com.authserver.Authserver.model.Tenant;
 import com.authserver.Authserver.model.UserRole;
 import com.authserver.Authserver.model.FilterReferences.RoleEnum;
 import com.authserver.Authserver.repository.OAuthUserRepository;
+import com.authserver.Authserver.repository.TenantRepository;
 import com.authserver.Authserver.repository.UserRoleRepository;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
@@ -14,16 +16,19 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.List;
 
 @Component
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final OAuthUserRepository userRepo;
     private final UserRoleRepository roleRepo;
+    private final TenantRepository tenantRepository;
 
-    public CustomOAuth2UserService(OAuthUserRepository userRepo, UserRoleRepository roleRepo) {
+    public CustomOAuth2UserService(OAuthUserRepository userRepo, UserRoleRepository roleRepo, TenantRepository tenantRepository) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
+        this.tenantRepository = tenantRepository;
     }
 
     @Override
@@ -37,18 +42,28 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String picture = oAuth2User.getAttribute("picture");
 
         OAuthUser user = userRepo.findById(googleId).orElse(new OAuthUser());
+        boolean isNewUser = (user.getGoogleId() == null);
+
         user.setGoogleId(googleId);
         user.setEmail(email);
         user.setName(name);
         user.setPictureUrl(picture);
+
+        if (isNewUser) {
+            // 3. Set defaultTenantId = 1 (or any logic you want)
+            user.setDefaultTenantId("1");
+        }
         userRepo.save(user);
 
-        UserRole userRole = roleRepo.findByGoogleId(googleId).orElse(null);
-        if (userRole == null) {
-            userRole = new UserRole();
-            userRole.setGoogleId(googleId);
-            userRole.setRole(RoleEnum.USER); 
-            roleRepo.save(userRole);
+        if (isNewUser) {
+            List<Tenant> allTenants = tenantRepository.findAll();
+            for (Tenant t : allTenants) {
+                UserRole userRole = new UserRole();
+                userRole.setGoogleId(googleId);
+                userRole.setTenant(t);  
+                userRole.setRole(RoleEnum.USER);
+                roleRepo.save(userRole);
+            }
         }
 
         return new DefaultOAuth2User(

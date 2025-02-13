@@ -6,12 +6,12 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.authserver.Authserver.model.Finding;
+import com.authserver.Authserver.model.Tenant;
 import com.authserver.Authserver.model.FilterReferences.ScanType;
 import com.authserver.Authserver.model.FilterReferences.Severity;
 import com.authserver.Authserver.model.FilterReferences.Status;
+import com.authserver.Authserver.repository.TenantRepository;
 import com.authserver.Authserver.dto.PageDTO;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -23,21 +23,28 @@ import java.util.stream.Collectors;
 public class ElasticsearchService {
 
     private final ElasticsearchClient esClient;
+    private final TenantRepository tenantRepository;
 
-    @Value("${app.elasticsearch.findings-index}")
-    private String findingsIndex;
-
-    public ElasticsearchService(ElasticsearchClient esClient) {
+    public ElasticsearchService(ElasticsearchClient esClient, TenantRepository tenantRepository) {
         this.esClient = esClient;
+        this.tenantRepository = tenantRepository;
+    }
+
+    private String getFindingsIndex(String tenantId) {
+        Tenant tenant = tenantRepository.findByTenantId(tenantId)
+                .orElseThrow(() -> new RuntimeException("Invalid tenantId: " + tenantId));
+        return tenant.getEsIndex();
     }
 
     public PageDTO<Finding> findFiltered(
+            String tenantId,
             List<ScanType> toolTypes,
             List<Status> statuses,
             List<Severity> severities,
             int page,
             int size) throws IOException {
 
+        String findingsIndex = getFindingsIndex(tenantId);
         Query boolQuery = buildBoolQuery(toolTypes, statuses, severities);
         int from = (page - 1) * size;
 

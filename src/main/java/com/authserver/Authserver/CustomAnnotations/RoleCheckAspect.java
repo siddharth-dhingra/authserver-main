@@ -36,7 +36,14 @@ public class RoleCheckAspect {
                 throw new AccessDeniedException("Unable to determine user's Google ID from principal.");
             }
 
-            Optional<UserRole> roleOpt = userRoleRepository.findByGoogleId(googleId);
+            Object[] args = joinPoint.getArgs();
+            String tenantId = findTenantIdFromArgs(args);
+            if (tenantId == null) {
+                throw new AccessDeniedException("Missing tenantId in request.");
+            }
+
+            Optional<UserRole> roleOpt = userRoleRepository.findByGoogleIdAndTenant_TenantId(googleId, tenantId);
+            
             if (!roleOpt.isPresent()) {
                 throw new AccessDeniedException("User not found in user_roles table.");
             }
@@ -60,5 +67,16 @@ public class RoleCheckAspect {
             return (sub != null) ? sub.toString() : null;
         }
         return auth.getName();
+    }
+
+    private String findTenantIdFromArgs(Object[] args) {
+        for (Object arg : args) {
+            if (arg instanceof String) {
+                // naive approach: we assume the first Long is tenantId
+                return (String) arg;
+            }
+            // or check if annotated with something like @TenantId
+        }
+        return null;
     }
 }

@@ -21,27 +21,26 @@ public class DashboardController {
     }
 
     @GetMapping("/alerts/toolCounts")
-    public ResponseEntity<Map<String, Long>> getAlertsPerTool() {
-        Map<String, Long> data = dashboardService.getAlertsPerTool();
+    public ResponseEntity<Map<String, Long>> getAlertsPerTool(@RequestParam String tenantId) {
+        Map<String, Long> data = dashboardService.getAlertsPerTool(tenantId);
         return ResponseEntity.ok(data);
     }
 
     @GetMapping("/alerts/stateCounts")
-    public ResponseEntity<Map<String, Long>> getAlertsPerState(@RequestParam(required = false) String tool) {
-        Map<String, Long> data = dashboardService.getAlertsPerState(tool);
+    public ResponseEntity<Map<String, Long>> getAlertsPerState(@RequestParam String tenantId, @RequestParam(required = false) String tool) {
+        Map<String, Long> data = dashboardService.getAlertsPerState(tenantId, tool);
         return ResponseEntity.ok(data);
     }
 
     @GetMapping("/alerts/severityCounts")
-    public ResponseEntity<Map<String, Long>> getAlertsPerSeverity(@RequestParam(required = false) String tool) {
-        Map<String, Long> data = dashboardService.getAlertsPerSeverity(tool);
+    public ResponseEntity<Map<String, Long>> getAlertsPerSeverity(@RequestParam String tenantId, @RequestParam(required = false) String tool) {
+        Map<String, Long> data = dashboardService.getAlertsPerSeverity(tenantId, tool);
         return ResponseEntity.ok(data);
     }
 
     @GetMapping("/alerts/cvssHistogram")
-    public ResponseEntity<List<Map<String, Object>>> getCvssHistogram(@RequestParam(required = false) String tool) {
-        List<Map<String, Object>> data = dashboardService.getCvssHistogram(tool);
+    public ResponseEntity<List<Map<String, Object>>> getCvssHistogram(@RequestParam String tenantId, @RequestParam(required = false) String tool) {
+        List<Map<String, Object>> data = dashboardService.getCvssHistogram(tenantId, tool);
         return ResponseEntity.ok(data);
     }
-
 }
