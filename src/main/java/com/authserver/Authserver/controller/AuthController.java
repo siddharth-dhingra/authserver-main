@@ -57,7 +57,6 @@ public class AuthController {
         if (tenantId == null) {
             tenantId = user.getDefaultTenantId();
         }
-        System.out.println(tenantId);
         Optional<UserRole> roleOpt = userRoleRepository.findByGoogleIdAndTenant_TenantId(googleId, tenantId);
         
         if (!roleOpt.isPresent()) {
@@ -72,8 +71,6 @@ public class AuthController {
         List<String> tenantNames = roles.stream()
                 .map(role -> role.getTenant().getTenantName())
                 .collect(Collectors.toList());
-
-        System.out.println(userRole.getRole());
 
         Map<String, Object> out = new HashMap<>();
         out.put("name", actualName);

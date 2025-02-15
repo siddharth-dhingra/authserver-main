@@ -12,7 +12,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
   kafka:
     bootstrap-servers: localhost:9092
   security:
@@ -36,7 +36,7 @@ spring:
 app:
   kafka:
     topics:
-      scan: tool-scan-ingestion
+      scan: jfc-auth-topic
       update: tool-update-ingestion
   elasticsearch:
     findings-index: findings-index

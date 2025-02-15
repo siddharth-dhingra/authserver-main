@@ -1,20 +1,17 @@
 package com.authserver.Authserver.model;
 
-
-import java.util.List;
-
-import com.authserver.Authserver.model.FilterReferences.ScanType;
+import com.authserver.Authserver.model.FilterReferences.ToolType;
 
 public class ScanEvent {
     private String tenantId;
-    private List<ScanType> types;
+    private ToolType toolType;
 
     public ScanEvent() {
     }
 
-    public ScanEvent(String tenantId, List<ScanType> types) {
+    public ScanEvent(String tenantId, ToolType toolType) {
         this.tenantId = tenantId;
-        this.types = types;
+        this.toolType = toolType;
     }
 
     public String getTenantId() {
@@ -24,18 +21,18 @@ public class ScanEvent {
         this.tenantId = tenantId;
     }
 
-    public List<ScanType> getTypes() {
-        return types;
+    public ToolType getToolType() {
+        return toolType;
     }
-    public void setTypes(List<ScanType> types) {
-        this.types = types;
+    public void setToolType(ToolType toolType) {
+        this.toolType = toolType;
     }
 
     @Override
     public String toString() {
         return "ScanEvent{" +
                 "tenantId='" + tenantId + '\'' +
-                ", types=" + types +
+                ", toolType=" + toolType +
                 '}';
     }
 }

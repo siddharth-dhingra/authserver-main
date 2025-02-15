@@ -50,7 +50,6 @@ public class RoleCheckAspect {
 
             UserRole userRole = roleOpt.get();
             RoleEnum userDbRole = userRole.getRole();
-            System.out.println(userRole);
             for (RoleEnum re : allowed) {
                 if (userDbRole == re) {
                     return joinPoint.proceed();
