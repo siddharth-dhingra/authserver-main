@@ -1,7 +1,7 @@
 package com.authserver.Authserver.config;
 
 import com.authserver.Authserver.dto.ScanRequestEvent;
-import com.authserver.Authserver.model.UpdateEvent;
+import com.authserver.Authserver.dto.UpdateAlertEvent;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -40,7 +40,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ProducerFactory<String, UpdateEvent> updateEventProducerFactory() {
+    public ProducerFactory<String, UpdateAlertEvent> updateEventProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -51,7 +51,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, UpdateEvent> updateEventKafkaTemplate() {
+    public KafkaTemplate<String, UpdateAlertEvent> updateEventKafkaTemplate() {
         return new KafkaTemplate<>(updateEventProducerFactory());
     }
 }

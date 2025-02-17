@@ -37,6 +37,6 @@ app:
   kafka:
     topics:
       scan: jfc-auth-topic
-      update: tool-update-ingestion
+      update: jfc-auth-topic1
   elasticsearch:
     findings-index: findings-index
