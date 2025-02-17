@@ -36,7 +36,6 @@ spring:
 app:
   kafka:
     topics:
-      scan: jfc-auth-topic
-      update: jfc-auth-topic1
-  elasticsearch:
-    findings-index: findings-index
+      jfc-unified: job-topic
+      scan-destination: jfc-tool-topic
+      update-destination: jfc-bgjobs-topic

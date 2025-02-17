@@ -5,13 +5,15 @@ import com.authserver.Authserver.model.FilterReferences.ToolType;
 public class ScanEvent {
     private String tenantId;
     private ToolType toolType;
+    private String destinationTopic;  // NEW field
 
     public ScanEvent() {
     }
 
-    public ScanEvent(String tenantId, ToolType toolType) {
+    public ScanEvent(String tenantId, ToolType toolType, String destinationTopic) {
         this.tenantId = tenantId;
         this.toolType = toolType;
+        this.destinationTopic = destinationTopic;
     }
 
     public String getTenantId() {
@@ -28,11 +30,19 @@ public class ScanEvent {
         this.toolType = toolType;
     }
 
+    public String getDestinationTopic() {
+        return destinationTopic;
+    }
+    public void setDestinationTopic(String destinationTopic) {
+        this.destinationTopic = destinationTopic;
+    }
+
     @Override
     public String toString() {
         return "ScanEvent{" +
                 "tenantId='" + tenantId + '\'' +
                 ", toolType=" + toolType +
+                ", destinationTopic='" + destinationTopic + '\'' +
                 '}';
     }
 }

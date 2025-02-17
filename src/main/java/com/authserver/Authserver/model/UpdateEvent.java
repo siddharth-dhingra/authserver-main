@@ -9,16 +9,18 @@ public class UpdateEvent {
     private long alertNumber;   
     private String newState;    
     private String reason;      
+    private String destinationTopic;  // NEW field
 
     public UpdateEvent() {}
 
     public UpdateEvent(String tenantId, ScanType toolType,
-                       long alertNumber, String newState, String reason) {
+                       long alertNumber, String newState, String reason, String destinationTopic) {
         this.tenantId = tenantId;
         this.toolType = toolType;
         this.alertNumber = alertNumber;
         this.newState = newState;
         this.reason = reason;
+        this.destinationTopic = destinationTopic;
     }
 
     // Getters and setters
@@ -61,5 +63,24 @@ public class UpdateEvent {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public String getDestinationTopic() {
+        return destinationTopic;
+    }
+    public void setDestinationTopic(String destinationTopic) {
+        this.destinationTopic = destinationTopic;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateEvent{" +
+                "tenantId='" + tenantId + '\'' +
+                ", toolType=" + toolType +
+                ", alertNumber=" + alertNumber +
+                ", newState='" + newState + '\'' +
+                ", reason='" + reason + '\'' +
+                ", destinationTopic='" + destinationTopic + '\'' +
+                '}';
     }
 }

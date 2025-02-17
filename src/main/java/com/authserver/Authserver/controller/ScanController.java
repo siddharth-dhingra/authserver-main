@@ -46,7 +46,7 @@ public class ScanController {
         }
 
         for (ToolType toolType : toolTypes) {
-            ScanEvent scanEvent = new ScanEvent(tenantId, toolType);
+            ScanEvent scanEvent = new ScanEvent(tenantId, toolType,null);
             ScanRequestEvent event = new ScanRequestEvent(scanEvent,null);
             scanEventProducer.sendScanEvent(event);
         }

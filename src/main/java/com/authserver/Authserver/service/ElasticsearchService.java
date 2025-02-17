@@ -45,6 +45,12 @@ public class ElasticsearchService {
             int size) throws IOException {
 
         String findingsIndex = getFindingsIndex(tenantId);
+
+        boolean indexExists = esClient.indices().exists(e -> e.index(findingsIndex)).value();
+        if (!indexExists) {
+            return new PageDTO<>(new ArrayList<>(), 0);
+        }
+
         Query boolQuery = buildBoolQuery(toolTypes, statuses, severities);
         int from = (page - 1) * size;
 
