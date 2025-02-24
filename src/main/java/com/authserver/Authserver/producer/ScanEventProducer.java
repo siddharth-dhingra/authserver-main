@@ -2,7 +2,6 @@ package com.authserver.Authserver.producer;
 import com.authserver.Authserver.dto.ScanRequestEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ public class ScanEventProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    public ScanEventProducer(@Qualifier("scanEventKafkaTemplate") KafkaTemplate<String, String> kafkaTemplate) {
+    public ScanEventProducer(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = new ObjectMapper();
     }

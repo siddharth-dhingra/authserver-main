@@ -3,8 +3,12 @@ package com.authserver.Authserver.service;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch.core.GetRequest;
+import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.UpdateRequest;
+
 import com.authserver.Authserver.model.Finding;
 import com.authserver.Authserver.model.Tenant;
 import com.authserver.Authserver.model.FilterReferences.ScanType;
@@ -15,6 +19,7 @@ import com.authserver.Authserver.dto.PageDTO;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +39,23 @@ public class ElasticsearchService {
         Tenant tenant = tenantRepository.findByTenantId(tenantId)
                 .orElseThrow(() -> new RuntimeException("Invalid tenantId: " + tenantId));
         return tenant.getEsIndex();
+    }
+
+    public Finding getSingleFinding(String tenantId, String findingId) {
+        String indexName = getFindingsIndex(tenantId);
+        try {
+            GetResponse<Finding> response = esClient.get(
+                GetRequest.of(g -> g.index(indexName).id(findingId)),
+                Finding.class
+            );
+            if(response.found()) {
+                return response.source();
+            } else {
+                throw new RuntimeException("Finding not found for id: " + findingId);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to fetch finding with id: " + findingId, e);
+        }
     }
 
     public PageDTO<Finding> findFiltered(
@@ -128,5 +150,29 @@ public class ElasticsearchService {
                 .build();
 
         return Query.of(q -> q.bool(boolQuery));
+    }
+
+    public void updateFindingWithTicketId(String tenantId, String findingId, String ticketId) {
+        String indexName = getFindingsIndex(tenantId);
+
+        Finding findingUpdate = new Finding();
+        findingUpdate.setTicketId(ticketId);
+        findingUpdate.setUpdatedAt(LocalDateTime.now().toString());
+
+        System.out.println("Updating finding with ticket ID: " + ticketId);
+        System.out.println("Finding ID: " + findingId);
+        System.out.println("Index name: " + indexName);
+        
+        UpdateRequest<Finding, Finding> updateRequest = UpdateRequest.of(u -> u
+            .index(indexName)
+            .id(findingId)
+            .doc(findingUpdate)
+        );
+
+        try {
+            esClient.update(updateRequest, Finding.class);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to update finding with ticket ID", e);
+        }
     }
 }

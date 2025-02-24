@@ -38,4 +38,5 @@ app:
     topics:
       jfc-unified: job-topic
       scan-destination: jfc-tool-topic
-      update-destination: jfc-bgjobs-topic
+      update-destination: jfc-bgjobs-topic1
+      ticket-destination: jfc-bgjobs-topic1

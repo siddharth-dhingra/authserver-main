@@ -78,23 +78,23 @@ public class KafkaConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
-    @Bean
-    public ProducerFactory<String, String> scanEventProducerFactory() {
-        Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        // Use StringSerializer for value
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        return new DefaultKafkaProducerFactory<>(configProps);
-    }
+    // @Bean
+    // public ProducerFactory<String, String> scanEventProducerFactory() {
+    //     Map<String, Object> configProps = new HashMap<>();
+    //     configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    //     configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    //     // Use StringSerializer for value
+    //     configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+    //     return new DefaultKafkaProducerFactory<>(configProps);
+    // }
+
+    // @Bean
+    // public KafkaTemplate<String, String> scanEventKafkaTemplate() {
+    //     return new KafkaTemplate<>(scanEventProducerFactory());
+    // }
 
     @Bean
-    public KafkaTemplate<String, String> scanEventKafkaTemplate() {
-        return new KafkaTemplate<>(scanEventProducerFactory());
-    }
-
-    @Bean
-    public ProducerFactory<String, String> updateEventProducerFactory() {
+    public ProducerFactory<String, String> eventProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -105,6 +105,6 @@ public class KafkaConfig {
 
     @Bean
     public KafkaTemplate<String, String> updateEventKafkaTemplate() {
-        return new KafkaTemplate<>(updateEventProducerFactory());
+        return new KafkaTemplate<>(eventProducerFactory());
     }
 }

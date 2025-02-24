@@ -19,7 +19,8 @@ public class Finding {
     private String cve;
     private String cwe;
     private Double cvss;
-    private String location;       
+    private String location; 
+    private String ticketId;      
     private Map<String, Object> additionalData; 
 
     public Finding() {}
@@ -127,6 +128,14 @@ public class Finding {
     public void setLocation(String location) {
         this.location = location;
     }
+    
+    public String getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(String ticketId) {
+        this.ticketId = ticketId;
+    }
 
     public Map<String, Object> getAdditionalData() {
         return additionalData;
@@ -152,6 +161,7 @@ public class Finding {
                 ", cwe='" + cwe + '\'' +
                 ", cvss=" + cvss +
                 ", location='" + location + '\'' +
+                ", ticketId='" + ticketId + '\'' +
                 ", additionalData=" + additionalData +
                 '}';
     }

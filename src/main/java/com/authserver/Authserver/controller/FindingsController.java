@@ -43,4 +43,10 @@ public class FindingsController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/single")
+    public ResponseEntity<Finding> getSingleFinding(@RequestParam String tenantId, @RequestParam String findingId) {
+        Finding finding = elasticsearchService.getSingleFinding(tenantId, findingId);
+        return ResponseEntity.ok(finding);
+    }
 }

@@ -34,11 +34,23 @@ public class Tenant {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "account_url")
+    private String accountUrl;
+
+    @Column(name = "api_token")
+    private String apiToken;
+
+    @Column(name = "project_key")
+    private String projectKey;
     
     public Tenant() {}
 
     public Tenant(Long id, String tenantId, String tenantName, String owner, String repo, String pat, String esIndex,
-            LocalDateTime createdAt, LocalDateTime updatedAt) {
+            LocalDateTime createdAt, LocalDateTime updatedAt, String username, String accountUrl, String apiToken, String projectKey) {
         this.id = id;
         this.tenantId = tenantId;
         this.tenantName = tenantName;
@@ -48,6 +60,10 @@ public class Tenant {
         this.esIndex = esIndex;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.username = username;
+        this.accountUrl = accountUrl;
+        this.apiToken = apiToken;
+        this.projectKey = projectKey;
     }
 
     public Long getId() {
@@ -122,8 +138,39 @@ public class Tenant {
         this.updatedAt = updatedAt;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getAccountUrl() {
+        return accountUrl;
+    }
+
+    public void setAccountUrl(String accountUrl) {
+        this.accountUrl = accountUrl;
+    }
+
+    public String getApiToken() {
+        return apiToken;
+    }
+
+    public void setApiToken(String apiToken) {
+        this.apiToken = apiToken;
+    }
+
+    public String getProjectKey() {
+        return projectKey;
+    }
+
+    public void setProjectKey(String projectKey) {
+        this.projectKey = projectKey;
+    }
+
     public Tenant orElseThrow(Object object) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
     }    
 }

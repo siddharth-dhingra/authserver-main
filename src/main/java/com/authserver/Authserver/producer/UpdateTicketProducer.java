@@ -1,6 +1,6 @@
 package com.authserver.Authserver.producer;
 
-import com.authserver.Authserver.dto.UpdateAlertEvent;
+import com.authserver.Authserver.dto.UpdateTicketEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -8,27 +8,26 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UpdateEventProducer {
+public class UpdateTicketProducer {
 
     @Value("${app.kafka.topics.jfc-unified}")
     private String unifiedTopic;
 
-    @Value("${app.kafka.topics.update-destination}")
-    private String updateTopic;
+    @Value("${app.kafka.topics.ticket-destination}")
+    private String updateTicketTopic;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    public UpdateEventProducer(KafkaTemplate<String, String> kafkaTemplate) {
+    public UpdateTicketProducer(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = new ObjectMapper();
     }
 
-    public void sendUpdateEvent(UpdateAlertEvent event) {
-        // Key can be null or something like event.getRepo()
-        // kafkaTemplate.send(updateTopic, event);
+    public void updateTicketEvent(UpdateTicketEvent event) {
+        // kafkaTemplate.send(scanTopic, event);
         if (event.getPayload() != null) {
-            event.getPayload().setDestinationTopic(updateTopic);
+            event.getPayload().setDestinationTopic(updateTicketTopic);
         }
         try {
             String json = objectMapper.writeValueAsString(event);
